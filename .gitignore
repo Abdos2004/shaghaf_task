@@ -332,9 +332,17 @@ paket-files/
 # CodeRush personal settings
 .cr/personal
 
-# Python Tools for Visual Studio (PTVS)
+# Python Tools for Visual Studio (PTVS) & Environments
 __pycache__/
 *.pyc
+.venv
+.venv/
+venv
+venv/
+env
+env/
+
+
 
 # Cake - Uncomment if you are using it
 # tools/**
