@@ -1,26 +1,19 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Management.Models;
 
 namespace Management.Controllers;
 
-public class HomeController : Controller
+[ApiController]
+[Route("api/[controller]")]
+public class HomeController : ControllerBase
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    [HttpGet]
+    public IActionResult Get()
     {
-        _logger = logger;
-    }
-
-    public IActionResult Index()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return Ok(new
+        {
+            status = "Online",
+            message = "Management API is running",
+            timestamp = DateTime.UtcNow
+        });
     }
 }

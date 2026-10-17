@@ -16,7 +16,9 @@
 # Architecture:       macOS arm64 (Apple Silicon)
 # Project File:       Management/Management.csproj
 # Solution File:      Management.sln
-# Template:           ASP.NET Core MVC (Model-View-Controller)
+# Template:           ASP.NET Core Web API (Backend)
+# Central Build:      Directory.Build.props
+# Central Packages:   Directory.Packages.props (CPM enabled)
 # Local Ports:        http://localhost:5266 | https://localhost:7099
 # Run Command:        dotnet run --project Management/Management.csproj
 
