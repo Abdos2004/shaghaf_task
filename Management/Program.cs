@@ -1,7 +1,7 @@
 using Management.Data;
 using Microsoft.EntityFrameworkCore;
 
-LoadEnvironmentFile(Path.Combine(Directory.GetCurrentDirectory(), ".env"));
+LoadEnvironmentFile(FindEnvironmentFile());
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -86,4 +86,38 @@ static void LoadEnvironmentFile(string path)
             Environment.SetEnvironmentVariable(key, value);
         }
     }
+}
+
+static string FindEnvironmentFile()
+{
+    var startDirectories = new[]
+    {
+        Directory.GetCurrentDirectory(),
+        AppContext.BaseDirectory
+    };
+
+    foreach (var startDirectory in startDirectories)
+    {
+        var directory = new DirectoryInfo(startDirectory);
+        while (directory is not null)
+        {
+            var localProjectFile = Path.Combine(directory.FullName, "Management.csproj");
+            if (File.Exists(localProjectFile))
+            {
+                return Path.Combine(directory.FullName, ".env");
+            }
+
+            var projectDirectory = Path.Combine(directory.FullName, "Management");
+            if (File.Exists(Path.Combine(projectDirectory, "Management.csproj")))
+            {
+                return Path.Combine(projectDirectory, ".env");
+            }
+
+            directory = directory.Parent;
+        }
+    }
+
+    // Preserve a predictable location in error messages when the local file has
+    // not been created yet.
+    return Path.Combine(Directory.GetCurrentDirectory(), "Management", ".env");
 }
